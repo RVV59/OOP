@@ -1,9 +1,9 @@
 import product
 import category
 
-
 if __name__ == "__main__":
-    product1 = product.Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    product1 = product.Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера",
+                               180000.0, 5)
     product2 = product.Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
     product3 = product.Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
 
@@ -23,8 +23,9 @@ if __name__ == "__main__":
     print(product3.quantity)
 
     category1 = category.Category("Смартфоны",
-                                     "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
-                                     [product1, product2, product3])
+                                  "Смартфоны, как средство не только коммуникации, но и получения "
+                                  "дополнительных функций для удобства жизни",
+                                  [product1, product2, product3])
 
     print(category1.name == "Смартфоны")
     print(category1.description)
@@ -34,8 +35,9 @@ if __name__ == "__main__":
 
     product4 = product.Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7)
     category2 = category.Category("Телевизоры",
-                                     "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
-                                     [product4])
+                                  "Современный телевизор, который позволяет наслаждаться просмотром,"
+                                  " станет вашим другом и помощником",
+                                  [product4])
 
     print(category2.name)
     print(category2.description)
