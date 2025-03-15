@@ -33,3 +33,8 @@ class Category:
         for product in self.__products:
             result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
         return result
+
+    def get_products_list(self):
+        """Возвращает список товаров."""
+        return self.__products
+
