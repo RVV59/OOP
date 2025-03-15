@@ -1,4 +1,4 @@
-from src.product import Product
+from product import Product
 
 
 class Category:
