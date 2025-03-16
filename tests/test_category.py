@@ -87,3 +87,6 @@ def test_category():
     # Проверяем счетчики
     assert category.product_count == 2, "Ошибка в счетчике продуктов."
     assert Category.product_count == 2, "Ошибка в общем счетчике продуктов."
+
+
+

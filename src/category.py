@@ -37,4 +37,3 @@ class Category:
     def get_products_list(self):
         """Возвращает список товаров."""
         return self.__products
-
