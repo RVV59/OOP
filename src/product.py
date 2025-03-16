@@ -14,6 +14,10 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+
+    def __str__(self):
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
     @property
     def price(self):
         """Геттер для приватного атрибута __price."""
@@ -38,3 +42,4 @@ class Product:
             price=product_data.get('price'),
             quantity=product_data.get('quantity')
         )
+
