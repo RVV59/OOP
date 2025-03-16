@@ -43,3 +43,8 @@ class Product:
             quantity=product_data.get('quantity')
         )
 
+    def __add__(self, other):
+        """Сложение продуктов по общей стоимости на складе."""
+        if not isinstance(other, Product):
+            raise TypeError("Можно складывать только объекты Product")
+        return (self.price * self.quantity) + (other.price * other.quantity)

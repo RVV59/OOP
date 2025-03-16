@@ -26,7 +26,7 @@ def test_category_initialization():
     # Проверяем вывод через геттер products
     expected_output = (
         "Product 1, 100.0 руб. Остаток: 10 шт.\n"
-        "Product 2, 200.0 руб. Остаток: 5 шт.\n"
+        "Product 2, 200.0 руб. Остаток: 5 шт."
     )
     assert category.products == expected_output, "Ошибка в выводе списка товаров."
 
@@ -81,7 +81,7 @@ def test_category():
     category.add_product(product2)
 
     # Проверяем вывод списка товаров
-    expected_output = "Хлеб, 50 руб. Остаток: 10 шт.\nМолоко, 80 руб. Остаток: 5 шт.\n"
+    expected_output = "Хлеб, 50 руб. Остаток: 10 шт.\nМолоко, 80 руб. Остаток: 5 шт."
     assert category.products == expected_output, "Ошибка в выводе списка товаров."
 
     # Проверяем счетчики
