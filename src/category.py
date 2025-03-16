@@ -1,4 +1,4 @@
-from product import Product
+from src.product import Product
 
 
 class Category:
@@ -37,4 +37,3 @@ class Category:
     def get_products_list(self):
         """Возвращает список товаров."""
         return self.__products
-
