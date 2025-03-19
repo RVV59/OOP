@@ -1,5 +1,6 @@
 import pytest
-from src.product import Product
+from src.product import Product, Smartphone, LawnGrass
+from src.category import Category
 
 
 def test_product_initialization():
@@ -51,3 +52,34 @@ def test_product():
 
     product.price = 200  # Новая цена ниже текущей
     assert product.price == 250, "Ошибка: цена изменилась на меньшую."
+
+
+def test_smartphone_initialization():
+    smartphone = Smartphone("Samsung", "Описание", 100000, 10, "Высокая",
+                            "S23", 256, "Черный")
+    assert smartphone.name == "Samsung"
+    assert smartphone.efficiency == "Высокая"
+
+
+def test_lawn_grass_initialization():
+    grass = LawnGrass("Трава", "Описание", 500, 20, "Россия",
+                      "14 дней", "Зеленый")
+    assert grass.country == "Россия"
+
+
+def test_add_smartphones():
+    s1 = Smartphone("Samsung", "Описание", 100000, 2, "Высокая",
+                    "S23", 256, "Черный")
+    s2 = Smartphone("iPhone", "Описание", 150000, 3, "Высокая",
+                    "15", 512, "Белый")
+    total = s1 + s2
+    assert total == (100000 * 2 + 150000 * 3)
+
+
+def test_add_different_classes():
+    s = Smartphone("Samsung", "Описание", 100000, 2, "Высокая",
+                   "S23", 256, "Черный")
+    g = LawnGrass("Трава", "Описание", 500, 20, "Россия",
+                  "14 дней", "Зеленый")
+    with pytest.raises(TypeError):
+        s + g
