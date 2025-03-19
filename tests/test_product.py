@@ -1,6 +1,5 @@
 import pytest
 from src.product import Product, Smartphone, LawnGrass
-from src.category import Category
 
 
 def test_product_initialization():
@@ -59,6 +58,8 @@ def test_smartphone_initialization():
                             "S23", 256, "Черный")
     assert smartphone.name == "Samsung"
     assert smartphone.efficiency == "Высокая"
+    assert smartphone.price == 100000
+    assert smartphone.description == "Описание"
 
 
 def test_lawn_grass_initialization():

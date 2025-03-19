@@ -2,6 +2,7 @@ import pytest
 from src.product import Product
 from src.category import Category
 
+
 # Фикстура для сброса счетчиков перед каждым тестом
 @pytest.fixture(autouse=True)
 def reset_counters():
@@ -87,6 +88,5 @@ def test_category():
     # Проверяем счетчики
     assert category.product_count == 2, "Ошибка в счетчике продуктов."
     assert Category.product_count == 2, "Ошибка в общем счетчике продуктов."
-
 
 

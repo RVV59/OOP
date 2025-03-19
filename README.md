@@ -49,3 +49,4 @@ if __name__ == "__main__":
 
 ## Тестирование
 ![15.3.2025 19:52:39](https://disk.yandex.ru/i/mDF58sRfJ_X0_A)
+![19.3.2025 19:00:39](https://disk.yandex.ru/d/4r0N-fhOr5Lw9Q)
