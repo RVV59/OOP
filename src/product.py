@@ -22,7 +22,7 @@ class ReprMixin:
     def __repr__(self):
         class_name = self.__class__.__name__
         attributes = ', '.join([f"{key}={value}" for key,
-        value in self.__dict__.items()])
+                                value in self.__dict__.items()])
         return f"{class_name}({attributes})"
 
 
@@ -35,8 +35,7 @@ class Product(BaseProduct, ReprMixin):
         if type(self) is not type(other):
             raise TypeError("Нельзя складывать товары разных"
                             " классов")
-        return (self.price * self.quantity) + (other.price *
-                                               other.quantity)
+        return (self.price * self.quantity) + (other.price * other.quantity)
 
 
 class Smartphone(Product):
