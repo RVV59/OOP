@@ -23,7 +23,8 @@ class Category:
             self.product_count += 1
             Category.product_count += 1
         else:
-            raise TypeError("Можно добавлять только объекты класса Product.")
+            raise TypeError("Можно добавлять только объекты класса"
+                            " Product.")
 
     @property
     def products(self):
@@ -31,7 +32,8 @@ class Category:
         Возвращает строку с информацией о всех продуктах."""
         result = ""
         for product in self.__products:
-            result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+            result += (f"{product.name}, {product.price} руб."
+                       f" Остаток: {product.quantity} шт.\n")
         return result
 
     def get_products_list(self):
