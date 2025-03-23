@@ -1,6 +1,5 @@
 import pytest
 from src.product import Product, Smartphone, LawnGrass
-from src.category import Category
 
 
 def test_product_initialization():
@@ -47,44 +46,56 @@ def test_product():
     product.price = 250  # Корректная цена
     assert product.price == 250, "Ошибка в установке новой цены."
 
-    product.price = -10  # Некорректная цена
-    assert product.price == 250, "Ошибка: цена изменилась на некорректное значение."
+    # Проверяем обработку некорректной цены
+    with pytest.raises(ValueError, match="Цена должна быть положительной"):
+        product.price = -10  # Некорректная цена
 
-    product.price = 200  # Новая цена ниже текущей
-    assert product.price == 250, "Ошибка: цена изменилась на меньшую."
+    # Проверяем, что цена не изменилась после некорректной попытки
+    assert product.price == 250, "Ошибка: цена изменилась после некорректной попытки."
 
-    def test_smartphone_initialization():
-        smartphone = Smartphone("Samsung", "Описание", 100000, 10, "Высокая", "S23", 256, "Черный")
-        assert smartphone.name == "Samsung"
-        assert smartphone.efficiency == "Высокая"
+    # Проверяем запрет уменьшения цены
+    with pytest.raises(ValueError, match="Цена не может быть меньше текущей"):
+        product.price = 200  # Новая цена ниже текущей
 
-    def test_lawn_grass_initialization():
-        grass = LawnGrass("Трава", "Описание", 500, 20, "Россия", "14 дней", "Зеленый")
-        assert grass.country == "Россия"
+    # Проверяем, что цена не изменилась после попытки уменьшения
+    assert product.price == 250, "Ошибка: цена изменилась после попытки уменьшения."
+def test_product_addition():
+    p1 = Product("Яблоко", "Фрукт", 100, 2)
+    p2 = Product("Груша", "Фрукт", 200, 3)
+    assert p1 + p2 == 100 * 2 + 200 * 3
 
-    def test_repr_mixin():
-        product = Product("Test Product", "Description", 100, 10)
-        assert repr(product) == "Product(name=Test Product, description=Description, price=100, quantity=10)"
 
-    def test_add_products():
-        p1 = Product("Product1", "Desc1", 100, 2)
-        p2 = Product("Product2", "Desc2", 200, 3)
-        total = p1 + p2
-        assert total == (100 * 2 + 200 * 3)
+def test_price_setter():
+    p = Product("Тест", "Описание", 100, 10)
 
-    def test_add_different_classes():
-        p = Product("Product", "Desc", 100, 2)
-        s = Smartphone("Samsung", "Desc", 100000, 1, "High", "S23", 256, "Black")
-        with pytest.raises(TypeError):
-            p + s
+    # Корректное изменение цены
+    p.price = 150
+    assert p.price == 150
 
-    def test_category_add_product():
-        category = Category("Test Category", "Description")
-        product = Product("Test Product", "Description", 100, 10)
-        category.add_product(product)
-        assert len(category.get_products_list()) == 1
+    # Попытка установить отрицательную цену
+    with pytest.raises(ValueError, match="Цена должна быть положительной"):
+        p.price = -50
 
-    def test_category_add_invalid_product():
-        category = Category("Test Category", "Description")
-        with pytest.raises(TypeError):
-            category.add_product("Not a product")
+    # Попытка уменьшить цену
+    with pytest.raises(ValueError, match="Цена не может быть меньше текущей"):
+        p.price = 100
+
+def test_smartphone_creation():
+    phone = Smartphone("iPhone", "Описание", 1000,
+                       5, "High", "15", 256,
+                       "Black")
+    assert phone.memory == 256
+
+def test_lawn_grass_creation():
+    grass = LawnGrass("Трава", "Описание", 500,
+                      10, "Россия", "14 дней",
+                      "Зеленый")
+    assert grass.germination_period == "14 дней"
+
+
+def test_invalid_product_addition():
+    p = Product("Яблоко", "Фрукт", 100, 2)
+    s = Smartphone("iPhone", "Описание", 1000, 5,
+                   "High", "15", 256, "Black")
+    with pytest.raises(TypeError, match="Нельзя складывать разные классы"):
+        p + s
