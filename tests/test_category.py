@@ -1,6 +1,6 @@
 import pytest
-from src.category import Category
 from src.product import Product
+from src.category import Category
 
 
 # Фикстура для сброса счетчиков перед каждым тестом
@@ -10,7 +10,6 @@ def reset_counters():
     Category.product_count = 0
 
 
-# Тест на корректную инициализацию объекта Category
 def test_category_initialization():
     products = [
         Product("Product 1", "Description 1", 100.0, 10),
@@ -18,10 +17,19 @@ def test_category_initialization():
     ]
     category = Category("Test Category", "This is a test category", products)
 
+    # Проверяем атрибуты категории
     assert category.name == "Test Category"
     assert category.description == "This is a test category"
-    assert len(category.products) == 2
-    assert category.product_count == 2
+
+    # Проверяем количество товаров
+    assert len(category.get_products_list()) == 2, "Ожидается 2 товара в категории."
+
+    # Проверяем вывод через геттер products
+    expected_output = (
+        "Product 1, 100.0 руб. Остаток: 10 шт.\n"
+        "Product 2, 200.0 руб. Остаток: 5 шт.\n"
+    )
+    assert category.products == expected_output, "Ошибка в выводе списка товаров."
 
 
 # Тест на подсчет количества категорий
@@ -58,3 +66,27 @@ def test_product_count_in_category():
     category = Category("Test Category", "This is a test category", products)
 
     assert category.product_count == 2
+
+
+# Тесты для класса Category
+def test_category():
+    # Создаем категорию
+    category = Category("Еда", "Продукты питания")
+
+    # Создаем продукты
+    product1 = Product("Хлеб", "Свежий хлеб", 50, 10)
+    product2 = Product("Молоко", "Свежее молоко", 80, 5)
+
+    # Добавляем продукты в категорию
+    category.add_product(product1)
+    category.add_product(product2)
+
+    # Проверяем вывод списка товаров
+    expected_output = "Хлеб, 50 руб. Остаток: 10 шт.\nМолоко, 80 руб. Остаток: 5 шт.\n"
+    assert category.products == expected_output, "Ошибка в выводе списка товаров."
+
+    # Проверяем счетчики
+    assert category.product_count == 2, "Ошибка в счетчике продуктов."
+    assert Category.product_count == 2, "Ошибка в общем счетчике продуктов."
+
+

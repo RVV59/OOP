@@ -1,5 +1,5 @@
 import pytest
-from src.product import Product
+from src.product import Product, Smartphone, LawnGrass
 
 
 def test_product_initialization():
@@ -25,3 +25,62 @@ def test_product_initialization_with_negative_quantity():
     with pytest.raises(ValueError) as exc_info:
         Product("Test Product", "This is a test product", 99.99, -10)
     assert str(exc_info.value) == "Quantity cannot be negative"
+
+
+def test_product():
+    # Создаем продукт через класс-метод
+    product_data = {
+        'name': 'Сыр',
+        'description': 'Голландский сыр',
+        'price': 200,
+        'quantity': 7
+    }
+    product = Product.new_product(product_data)
+
+    # Проверяем атрибуты продукта
+    assert product.name == "Сыр", "Ошибка в имени продукта."
+    assert product.price == 200, "Ошибка в цене продукта."
+    assert product.quantity == 7, "Ошибка в количестве продукта."
+
+    # Проверяем сеттер для цены
+    product.price = 250  # Корректная цена
+    assert product.price == 250, "Ошибка в установке новой цены."
+
+    product.price = -10  # Некорректная цена
+    assert product.price == 250, "Ошибка: цена изменилась на некорректное значение."
+
+    product.price = 200  # Новая цена ниже текущей
+    assert product.price == 250, "Ошибка: цена изменилась на меньшую."
+
+
+def test_smartphone_initialization():
+    smartphone = Smartphone("Samsung", "Описание", 100000, 10, "Высокая",
+                            "S23", 256, "Черный")
+    assert smartphone.name == "Samsung"
+    assert smartphone.efficiency == "Высокая"
+    assert smartphone.price == 100000
+    assert smartphone.description == "Описание"
+
+
+def test_lawn_grass_initialization():
+    grass = LawnGrass("Трава", "Описание", 500, 20, "Россия",
+                      "14 дней", "Зеленый")
+    assert grass.country == "Россия"
+
+
+def test_add_smartphones():
+    s1 = Smartphone("Samsung", "Описание", 100000, 2, "Высокая",
+                    "S23", 256, "Черный")
+    s2 = Smartphone("iPhone", "Описание", 150000, 3, "Высокая",
+                    "15", 512, "Белый")
+    total = s1 + s2
+    assert total == (100000 * 2 + 150000 * 3)
+
+
+def test_add_different_classes():
+    s = Smartphone("Samsung", "Описание", 100000, 2, "Высокая",
+                   "S23", 256, "Черный")
+    g = LawnGrass("Трава", "Описание", 500, 20, "Россия",
+                  "14 дней", "Зеленый")
+    with pytest.raises(TypeError):
+        s + g
