@@ -2,11 +2,15 @@ from abc import ABC, abstractmethod
 
 
 class ReprMixin:
+    def __init__(self):
+        print(repr(self))
+
+
     def __repr__(self):
         return f"{self.__class__.__name__}({', '.join(f'{k}={v}' for k, v in self.__dict__.items())})"
 
 
-class BaseProduct(ABC, ReprMixin):
+class BaseProduct(ABC):
     @abstractmethod
     def new_product(cls, product_data):
         pass
@@ -21,7 +25,7 @@ class BaseProduct(ABC, ReprMixin):
         pass
 
 
-class Product(BaseProduct):
+class Product(BaseProduct, ReprMixin):
     def __init__(self, name, description, price, quantity):
         if price < 0:
             # raise ValueError("Price cannot be negative")
