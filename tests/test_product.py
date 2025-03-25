@@ -18,13 +18,13 @@ def test_product_initialization_with_zero_quantity():
 def test_product_initialization_with_negative_price():
     with pytest.raises(ValueError) as exc_info:
         Product("Test Product", "This is a test product", -99.99, 10)
-    assert str(exc_info.value) == "Price cannot be negative"
+    assert str(exc_info.value) == "Цена должна быть положительной"
 
 
 def test_product_initialization_with_negative_quantity():
     with pytest.raises(ValueError) as exc_info:
         Product("Test Product", "This is a test product", 99.99, -10)
-    assert str(exc_info.value) == "Quantity cannot be negative"
+    assert str(exc_info.value) == "Количество должно быть положительным"
 
 
 def test_product():
