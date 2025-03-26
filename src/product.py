@@ -28,10 +28,8 @@ class BaseProduct(ABC):
 class Product(BaseProduct, ReprMixin):
     def __init__(self, name, description, price, quantity):
         if price < 0:
-            # raise ValueError("Price cannot be negative")
             raise ValueError("Цена должна быть положительной")
         if quantity < 0:
-            # raise ValueError("Quantity cannot be negative")
             raise ValueError("Количество должно быть положительным")
 
         self.name = name
