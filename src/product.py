@@ -31,6 +31,8 @@ class Product(BaseProduct, ReprMixin):
             raise ValueError("Цена должна быть положительной")
         if quantity < 0:
             raise ValueError("Количество должно быть положительным")
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
 
         self.name = name
         self.description = description
@@ -42,10 +44,19 @@ class Product(BaseProduct, ReprMixin):
     def price(self):
         return self._price
 
+    # @price.setter
+    # def price(self, value):
+    #     if value <= 0:
+    #         raise ValueError("Цена должна быть положительной")
+    #     if value < self._price:
+    #         raise ValueError("Цена не может быть меньше текущей")
+    #     self._price = value
     @price.setter
     def price(self, value):
-        if value <= 0:
+        if value < 0:
             raise ValueError("Цена должна быть положительной")
+        if value == 0:
+            raise ValueError("Цена не должна быть нулевой")
         if value < self._price:
             raise ValueError("Цена не может быть меньше текущей")
         self._price = value
@@ -61,7 +72,8 @@ class Product(BaseProduct, ReprMixin):
 
 
 class LawnGrass(Product):
-    def __init__(self, name, description, price, quantity, country, germination_period, color):
+    def __init__(self, name, description, price, quantity, country,
+                 germination_period, color):
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
@@ -69,7 +81,8 @@ class LawnGrass(Product):
 
 
 class Smartphone(Product):
-    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+    def __init__(self, name, description, price, quantity, efficiency,
+                 model, memory, color):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model

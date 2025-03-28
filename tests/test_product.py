@@ -10,9 +10,15 @@ def test_product_initialization():
     assert product.quantity == 10
 
 
-def test_product_initialization_with_zero_quantity():
-    product = Product("Test Product", "This is a test product", 99.99, 0)
-    assert product.quantity == 0
+# def test_product_initialization_with_zero_quantity():
+#     product = Product("Test Product", "This is a test product", 99.99, 0)
+#     assert product.quantity == 0
+
+def test_zero_quantity_validation():
+    """Проверяем, что товар с quantity=0 нельзя создать."""
+    with pytest.raises(ValueError) as error:
+        Product("Тест", "Описание", 100, 0)
+    assert str(error.value) == "Товар с нулевым количеством не может быть добавлен"
 
 
 def test_product_initialization_with_negative_price():
@@ -30,15 +36,15 @@ def test_product_initialization_with_negative_quantity():
 def test_product():
     # Создаем продукт через класс-метод
     product_data = {
-        'name': 'Сыр',
-        'description': 'Голландский сыр',
+        'name': 'Банан',
+        'description': 'Сибирский',
         'price': 200,
         'quantity': 7
     }
     product = Product.new_product(product_data)
 
     # Проверяем атрибуты продукта
-    assert product.name == "Сыр", "Ошибка в имени продукта."
+    assert product.name == "Банан", "Ошибка в имени продукта."
     assert product.price == 200, "Ошибка в цене продукта."
     assert product.quantity == 7, "Ошибка в количестве продукта."
 
@@ -50,6 +56,9 @@ def test_product():
     with pytest.raises(ValueError, match="Цена должна быть положительной"):
         product.price = -10  # Некорректная цена
 
+    with pytest.raises(ValueError, match="Цена не должна быть нулевой"):
+        product.price = 0  # Некорректная цена
+
     # Проверяем, что цена не изменилась после некорректной попытки
     assert product.price == 250, "Ошибка: цена изменилась после некорректной попытки."
 
@@ -60,8 +69,8 @@ def test_product():
     # Проверяем, что цена не изменилась после попытки уменьшения
     assert product.price == 250, "Ошибка: цена изменилась после попытки уменьшения."
 def test_product_addition():
-    p1 = Product("Яблоко", "Фрукт", 100, 2)
-    p2 = Product("Груша", "Фрукт", 200, 3)
+    p1 = Product("Телефон", "Чубайс", 100, 2)
+    p2 = Product("Бензин", "Бесплатный", 200, 3)
     assert p1 + p2 == 100 * 2 + 200 * 3
 
 
@@ -94,8 +103,8 @@ def test_lawn_grass_creation():
 
 
 def test_invalid_product_addition():
-    p = Product("Яблоко", "Фрукт", 100, 2)
-    s = Smartphone("iPhone", "Описание", 1000, 5,
+    p = Product("Телефон", "Чубайс", 100, 2)
+    s = Smartphone("RuPhone", "Описание", 1000, 5,
                    "High", "15", 256, "Black")
     with pytest.raises(TypeError, match="Нельзя складывать разные классы"):
         p + s
