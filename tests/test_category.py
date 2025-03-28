@@ -88,3 +88,23 @@ def test_category():
     # Проверяем счетчики
     assert category.product_count == 2, "Ошибка в счетчике продуктов."
     assert Category.product_count == 2, "Ошибка в общем счетчике продуктов."
+
+
+def test_middle_price_zero_division_handled():
+    # Создаем пустую категорию
+    category = Category("Телефон", "Будка на Тверской", [])
+
+    # Проверяем, что список товаров действительно пуст
+    assert len(category.get_products_list()) == 0
+
+    # Проверяем, что средняя цена возвращает 0 для пустой категории
+    assert category.middle_price() == 0
+
+    def test_add_product_with_zero_quantity():
+        category = Category("Газон", "Нетоптаный", [])
+
+        with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+            Product("Газовый телефон", "С запахом", 500, 0)
+
+        # Проверяем, что товар не был добавлен
+        assert len(category.get_products_list()) == 0
